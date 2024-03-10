@@ -1,5 +1,5 @@
 module com.udacity.parent.image {
-    exports com.udacity.parent.image.service to com.udacity.parent.security;
+    exports com.udacity.parent.image.service to com.udacity.parent.security, com.udacity.parent.application;
     requires software.amazon.awssdk.auth;
     requires software.amazon.awssdk.core;
     requires software.amazon.awssdk.regions;

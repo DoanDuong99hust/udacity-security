@@ -1,4 +1,4 @@
-package com.udacity.parent.security.application;
+package com.udacity.parent.application;
 
 import com.udacity.parent.image.service.FakeImageService;
 import com.udacity.parent.security.util.PretendDatabaseSecurityRepositoryImpl;

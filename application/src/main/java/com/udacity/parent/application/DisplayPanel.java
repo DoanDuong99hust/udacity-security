@@ -1,9 +1,9 @@
-package com.udacity.parent.security.application;
+package com.udacity.parent.application;
 
+import com.udacity.parent.image.service.StyleService;
 import com.udacity.parent.security.constant.AlarmStatus;
 import com.udacity.parent.security.util.SecurityService;
 import com.udacity.parent.security.util.StatusListener;
-import com.udacity.parent.image.service.StyleService;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;

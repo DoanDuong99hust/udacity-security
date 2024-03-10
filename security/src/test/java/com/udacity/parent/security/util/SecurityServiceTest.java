@@ -3,7 +3,6 @@ package com.udacity.parent.security.util;
 import com.udacity.parent.security.constant.AlarmStatus;
 import com.udacity.parent.security.constant.ArmingStatus;
 import com.udacity.parent.security.constant.SensorType;
-import com.udacity.parent.security.application.SensorPanel;
 import com.udacity.parent.image.service.FakeImageService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +20,6 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)

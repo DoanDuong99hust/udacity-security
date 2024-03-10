@@ -1,8 +1,8 @@
-package com.udacity.catpoint.application;
+package com.udacity.parent.application;
 
-import com.udacity.catpoint.data.ArmingStatus;
-import com.udacity.catpoint.service.SecurityService;
-import com.udacity.catpoint.service.StyleService;
+import com.udacity.parent.image.service.StyleService;
+import com.udacity.parent.security.constant.ArmingStatus;
+import com.udacity.parent.security.util.SecurityService;
 import net.miginfocom.swing.MigLayout;
 
 import javax.swing.*;
