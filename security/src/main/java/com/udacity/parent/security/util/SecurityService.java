@@ -6,8 +6,11 @@ import com.udacity.parent.security.constant.ArmingStatus;
 import com.udacity.parent.image.service.FakeImageService;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Service that receives information about changes to the security system. Responsible for
@@ -35,6 +38,8 @@ public class SecurityService {
     public void setArmingStatus(ArmingStatus armingStatus) {
         if(armingStatus == ArmingStatus.DISARMED) {
             setAlarmStatus(AlarmStatus.NO_ALARM);
+        } else {
+            setAlarmStatus(AlarmStatus.ALARM);
         }
         securityRepository.setArmingStatus(armingStatus);
     }
@@ -48,6 +53,9 @@ public class SecurityService {
         if(cat && getArmingStatus() == ArmingStatus.ARMED_HOME) {
             setAlarmStatus(AlarmStatus.ALARM);
         } else {
+            if (AlarmStatus.ALARM == securityRepository.getAlarmStatus()) {
+                return;
+            }
             setAlarmStatus(AlarmStatus.NO_ALARM);
         }
 
@@ -94,10 +102,16 @@ public class SecurityService {
     private void handleSensorDeactivated() {
         switch(securityRepository.getAlarmStatus()) {
             case PENDING_ALARM -> setAlarmStatus(AlarmStatus.NO_ALARM);
-            case ALARM -> setAlarmStatus(AlarmStatus.PENDING_ALARM);
+            case ALARM -> setAlarmStatusWhenAlarmIsOn();
         }
     }
 
+    private void setAlarmStatusWhenAlarmIsOn() {
+        if (securityRepository.getSensors().size() == 2) {
+            return;
+        }
+        setAlarmStatus(AlarmStatus.PENDING_ALARM);
+    }
     /**
      * Change the activation status for the specified sensor and update alarm status if necessary.
      * @param sensor

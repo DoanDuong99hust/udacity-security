@@ -1,6 +1,5 @@
 package com.udacity.parent.security.util;
 
-import com.udacity.parent.image.service.StyleService;
 import com.udacity.parent.security.constant.SensorType;
 import net.miginfocom.swing.MigLayout;
 

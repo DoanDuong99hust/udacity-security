@@ -1,6 +1,6 @@
 package com.udacity.parent.application;
 
-import com.udacity.parent.image.service.StyleService;
+import com.udacity.parent.security.util.StyleService;
 import com.udacity.parent.security.constant.AlarmStatus;
 import com.udacity.parent.security.util.SecurityService;
 import com.udacity.parent.security.util.StatusListener;

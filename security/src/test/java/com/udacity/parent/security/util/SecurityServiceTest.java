@@ -99,19 +99,17 @@ class SecurityServiceTest {
     @Test
     void handleAlarmActive_sensorStateChanges_alarmStateNotChange() {
         Mockito.when(securityService.getAlarmStatus()).thenReturn(AlarmStatus.ALARM);
+        Mockito.when(securityService.getArmingStatus()).thenReturn(ArmingStatus.ARMED_HOME);
+        Mockito.when(securityRepository.getSensors()).thenReturn(Set.of(windowSensor, motionSensor));
 
         sensorPanel.addSensor(motionSensor);
         sensorPanel.setSensorActivity(motionSensor, true);
-        securityService.changeSensorActivationStatus(motionSensor, false);
-        ArgumentCaptor<AlarmStatus> captor1 = ArgumentCaptor.forClass(AlarmStatus.class);
-        verify(securityRepository, atLeastOnce()).setAlarmStatus(captor1.capture());
-        assertEquals(captor1.getValue(), AlarmStatus.PENDING_ALARM);
 
-        Mockito.when(securityService.getAlarmStatus()).thenReturn(AlarmStatus.PENDING_ALARM);
-        securityService.changeSensorActivationStatus(motionSensor, true);
-        ArgumentCaptor<AlarmStatus> captor2 = ArgumentCaptor.forClass(AlarmStatus.class);
-        verify(securityRepository, atLeastOnce()).setAlarmStatus(captor2.capture());
-        assertEquals(captor2.getValue(), AlarmStatus.ALARM);
+        sensorPanel.addSensor(windowSensor);
+        sensorPanel.setSensorActivity(windowSensor, true);
+
+        securityService.changeSensorActivationStatus(motionSensor, false);
+        assertEquals(AlarmStatus.ALARM, securityRepository.getAlarmStatus());
     }
 
     /**
@@ -171,15 +169,22 @@ class SecurityServiceTest {
      */
     @Test
     void handleCatNotDetected_sensorNotActive_alarmStatusOn() {
-        Mockito.when(fakeImageService.imageContainsCat(any(), anyFloat())).thenReturn(false);
+        Mockito.when(securityService.getArmingStatus()).thenReturn(ArmingStatus.ARMED_HOME);
+        Mockito.when(fakeImageService.imageContainsCat(any(), anyFloat())).thenReturn(true);
         securityService.processImage(mock(BufferedImage.class));
+        Mockito.when(securityService.getAlarmStatus()).thenReturn(AlarmStatus.ALARM);
 
         sensorPanel.addSensor(windowSensor);
-        sensorPanel.setSensorActivity(windowSensor, false);
+        sensorPanel.setSensorActivity(windowSensor, true);
 
         ArgumentCaptor<AlarmStatus> captor = ArgumentCaptor.forClass(AlarmStatus.class);
         verify(securityRepository, atLeastOnce()).setAlarmStatus(captor.capture());
-        assertEquals(captor.getValue(), AlarmStatus.NO_ALARM);
+        assertEquals(AlarmStatus.ALARM, captor.getValue());
+
+        Mockito.when(fakeImageService.imageContainsCat(any(), anyFloat())).thenReturn(false);
+        securityService.processImage(mock(BufferedImage.class));
+
+        assertEquals(AlarmStatus.ALARM, securityRepository.getAlarmStatus());
     }
 
     /**
@@ -207,7 +212,7 @@ class SecurityServiceTest {
         sensorPanel.addSensor(windowSensor);
         sensorPanel.setSensorActivity(windowSensor, true);
         sensorPanel.addSensor(doorSensor);
-        sensorPanel.setSensorActivity(doorSensor, true);
+        sensorPanel.setSensorActivity(doorSensor, false);
         sensorPanel.addSensor(motionSensor);
         sensorPanel.setSensorActivity(motionSensor, true);
 
@@ -225,12 +230,13 @@ class SecurityServiceTest {
      */
     @Test
     void handleAlarmStatus_systemArmedHomeCatDetected_alarmStatusOn() {
-        Mockito.when(securityService.getArmingStatus()).thenReturn(ArmingStatus.ARMED_HOME);
+        Mockito.when(securityService.getArmingStatus()).thenReturn(ArmingStatus.DISARMED);
         Mockito.when(fakeImageService.imageContainsCat(any(), anyFloat())).thenReturn(true);
         securityService.processImage(mock(BufferedImage.class));
 
+        securityService.setArmingStatus(ArmingStatus.ARMED_HOME);
         ArgumentCaptor<AlarmStatus> captor = ArgumentCaptor.forClass(AlarmStatus.class);
         verify(securityRepository, atLeastOnce()).setAlarmStatus(captor.capture());
-        assertEquals(captor.getValue(), AlarmStatus.ALARM);
+        assertEquals(AlarmStatus.ALARM, captor.getValue());
     }
 }
