@@ -7,6 +7,6 @@ module com.udacity.parent.security {
     requires miglayout.swing;
 
     opens com.udacity.parent.security.util;
-    exports com.udacity.parent.security.constant;
-    exports com.udacity.parent.security.util;
+    exports com.udacity.parent.security.util to com.udacity.parent.application;
+    exports com.udacity.parent.security.constant to com.udacity.parent.application;
 }
