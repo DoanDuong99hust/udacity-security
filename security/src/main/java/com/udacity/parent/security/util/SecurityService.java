@@ -6,10 +6,10 @@ import com.udacity.parent.security.constant.ArmingStatus;
 import com.udacity.parent.image.service.FakeImageService;
 
 import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.ConcurrentSkipListSet;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.stream.Collectors;
 
 /**
@@ -40,8 +40,29 @@ public class SecurityService {
             setAlarmStatus(AlarmStatus.NO_ALARM);
         } else {
             setAlarmStatus(AlarmStatus.ALARM);
+            deactivateAllSensors();
+            statusListeners.forEach(StatusListener::sensorStatusChanged);
         }
         securityRepository.setArmingStatus(armingStatus);
+    }
+
+    private void deactivateAllSensors() {
+//        ExecutorService executorService = Executors.newSingleThreadExecutor();
+//        for (Sensor sensor: securityRepository.getSensors()) {
+//            sensor.setActive(true);
+//            executorService.execute(() -> changeSensorActivationStatus(sensor, false));
+//        }
+        ConcurrentSkipListSet<Sensor> sensorConcurrentSkipListSet = new ConcurrentSkipListSet<>(securityRepository.getSensors());
+        for (Sensor sensor: sensorConcurrentSkipListSet) {
+            sensor.setActive(true);
+            changeSensorActivationStatus(sensor, false);
+        }
+//        Iterator<Sensor> sensorIterator = sensorConcurrentSkipListSet.iterator();
+//        while (sensorIterator.hasNext()) {
+//            Sensor sensor = sensorIterator.next();
+//            sensor.setActive(true);
+//            changeSensorActivationStatus(sensor, false);
+//        }
     }
 
     /**

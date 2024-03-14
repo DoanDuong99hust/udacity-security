@@ -1,5 +1,6 @@
 package com.udacity.parent.application;
 
+import com.udacity.parent.security.util.Sensor;
 import com.udacity.parent.security.util.StyleService;
 import com.udacity.parent.security.constant.ArmingStatus;
 import com.udacity.parent.security.util.SecurityService;
@@ -8,6 +9,7 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.*;
 import java.util.Arrays;
 import java.util.Map;
+import java.util.concurrent.ConcurrentSkipListSet;
 import java.util.stream.Collectors;
 
 /**

@@ -34,7 +34,7 @@ public class CatpointGui extends JFrame {
         mainPanel.add(displayPanel, "wrap");
         mainPanel.add(imagePanel, "wrap");
         mainPanel.add(controlPanel, "wrap");
-        mainPanel.add(sensorPanel);
+        mainPanel.add(sensorPanel, "wrap");
 
         getContentPane().add(mainPanel);
 

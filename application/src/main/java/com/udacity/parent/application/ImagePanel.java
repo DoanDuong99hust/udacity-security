@@ -1,5 +1,6 @@
 package com.udacity.parent.application;
 
+import com.udacity.parent.security.util.Sensor;
 import com.udacity.parent.security.util.StyleService;
 import com.udacity.parent.security.constant.AlarmStatus;
 import com.udacity.parent.security.util.SecurityService;
@@ -75,6 +76,7 @@ public class ImagePanel extends JPanel implements StatusListener {
     @Override
     public void notify(AlarmStatus status) {
         //no behavior necessary
+        System.out.println("image panel");
     }
 
     @Override
@@ -89,5 +91,6 @@ public class ImagePanel extends JPanel implements StatusListener {
     @Override
     public void sensorStatusChanged() {
         //no behavior necessary
+        System.out.println("sensorStatusChanged image panel");
     }
 }

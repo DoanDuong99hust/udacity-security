@@ -212,7 +212,7 @@ class SecurityServiceTest {
         sensorPanel.addSensor(windowSensor);
         sensorPanel.setSensorActivity(windowSensor, true);
         sensorPanel.addSensor(doorSensor);
-        sensorPanel.setSensorActivity(doorSensor, false);
+        sensorPanel.setSensorActivity(doorSensor, true);
         sensorPanel.addSensor(motionSensor);
         sensorPanel.setSensorActivity(motionSensor, true);
 

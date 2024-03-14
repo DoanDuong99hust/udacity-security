@@ -1,5 +1,7 @@
 package com.udacity.parent.application;
 
+import com.udacity.parent.security.constant.AlarmStatus;
+import com.udacity.parent.security.util.StatusListener;
 import com.udacity.parent.security.util.StyleService;
 import com.udacity.parent.security.constant.SensorType;
 import com.udacity.parent.security.util.SecurityService;
@@ -12,7 +14,7 @@ import javax.swing.*;
  * Panel that allows users to add sensors to their system. Sensors may be
  * manually set to "active" and "inactive" to test the system.
  */
-public class SensorPanel extends JPanel {
+public class SensorPanel extends JPanel implements StatusListener {
 
     private SecurityService securityService;
 
@@ -39,7 +41,6 @@ public class SensorPanel extends JPanel {
         newSensorPanel = buildAddSensorPanel();
         sensorListPanel = new JPanel();
         sensorListPanel.setLayout(new MigLayout());
-
         updateSensorList(sensorListPanel);
 
         add(panelLabel, "wrap");
@@ -66,7 +67,7 @@ public class SensorPanel extends JPanel {
      * will display in the order that they are created.
      * @param p The Panel to populate with the current list of sensors
      */
-    public void updateSensorList(JPanel p) {
+    private void updateSensorList(JPanel p) {
         p.removeAll();
         securityService.getSensors().stream().sorted().forEach(s -> {
             JLabel sensorLabel = new JLabel(String.format("%s(%s): %s", s.getName(),  s.getSensorType().toString(),(s.getActive() ? "Active" : "Inactive")));
@@ -100,7 +101,7 @@ public class SensorPanel extends JPanel {
      * Adds a sensor to the securityService and then rebuilds the sensor list
      * @param sensor The sensor to add
      */
-    public void addSensor(Sensor sensor) {
+    private void addSensor(Sensor sensor) {
         if(securityService.getSensors().size() < 4) {
             securityService.addSensor(sensor);
             updateSensorList(sensorListPanel);
@@ -113,8 +114,24 @@ public class SensorPanel extends JPanel {
      * Remove a sensor from the securityService and then rebuild the sensor list
      * @param sensor The sensor to remove
      */
-    public void removeSensor(Sensor sensor) {
+    private void removeSensor(Sensor sensor) {
         securityService.removeSensor(sensor);
         updateSensorList(sensorListPanel);
+    }
+
+    @Override
+    public void notify(AlarmStatus status) {
+        System.out.println("sensor panel");
+    }
+
+    @Override
+    public void catDetected(boolean catDetected) {
+
+    }
+
+    @Override
+    public void sensorStatusChanged() {
+        updateSensorList(sensorListPanel);
+        System.out.println("hello");
     }
 }

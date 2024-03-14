@@ -1,5 +1,6 @@
 package com.udacity.parent.application;
 
+import com.udacity.parent.security.util.Sensor;
 import com.udacity.parent.security.util.StyleService;
 import com.udacity.parent.security.constant.AlarmStatus;
 import com.udacity.parent.security.util.SecurityService;
@@ -41,6 +42,7 @@ public class DisplayPanel extends JPanel implements StatusListener {
         currentStatusLabel.setText(status.getDescription());
         currentStatusLabel.setBackground(status.getColor());
         currentStatusLabel.setOpaque(true);
+        System.out.println("display panel");
     }
 
     @Override
@@ -51,5 +53,6 @@ public class DisplayPanel extends JPanel implements StatusListener {
     @Override
     public void sensorStatusChanged() {
         // no behavior necessary
+        System.out.println("sensorStatusChanged display panel");
     }
 }
