@@ -42,7 +42,6 @@ public class DisplayPanel extends JPanel implements StatusListener {
         currentStatusLabel.setText(status.getDescription());
         currentStatusLabel.setBackground(status.getColor());
         currentStatusLabel.setOpaque(true);
-        System.out.println("display panel");
     }
 
     @Override
@@ -53,6 +52,5 @@ public class DisplayPanel extends JPanel implements StatusListener {
     @Override
     public void sensorStatusChanged() {
         // no behavior necessary
-        System.out.println("sensorStatusChanged display panel");
     }
 }

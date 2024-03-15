@@ -76,7 +76,6 @@ public class ImagePanel extends JPanel implements StatusListener {
     @Override
     public void notify(AlarmStatus status) {
         //no behavior necessary
-        System.out.println("image panel");
     }
 
     @Override
@@ -91,6 +90,5 @@ public class ImagePanel extends JPanel implements StatusListener {
     @Override
     public void sensorStatusChanged() {
         //no behavior necessary
-        System.out.println("sensorStatusChanged image panel");
     }
 }

@@ -47,22 +47,11 @@ public class SecurityService {
     }
 
     private void deactivateAllSensors() {
-//        ExecutorService executorService = Executors.newSingleThreadExecutor();
-//        for (Sensor sensor: securityRepository.getSensors()) {
-//            sensor.setActive(true);
-//            executorService.execute(() -> changeSensorActivationStatus(sensor, false));
-//        }
         ConcurrentSkipListSet<Sensor> sensorConcurrentSkipListSet = new ConcurrentSkipListSet<>(securityRepository.getSensors());
         for (Sensor sensor: sensorConcurrentSkipListSet) {
             sensor.setActive(true);
             changeSensorActivationStatus(sensor, false);
         }
-//        Iterator<Sensor> sensorIterator = sensorConcurrentSkipListSet.iterator();
-//        while (sensorIterator.hasNext()) {
-//            Sensor sensor = sensorIterator.next();
-//            sensor.setActive(true);
-//            changeSensorActivationStatus(sensor, false);
-//        }
     }
 
     /**
